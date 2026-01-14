@@ -1,10 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import type { KeyEventEntry } from "@/types/keyboard";
 
 interface KeyLogProps {
@@ -22,32 +18,41 @@ function formatTime(date: Date): string {
   } as Intl.DateTimeFormatOptions);
 }
 
-function EventTypeBadge({ type }: { type: KeyEventEntry["type"] }) {
+function EventTypeIndicator({ type }: { type: KeyEventEntry["type"] }) {
   const config = {
     keydown: {
       label: "DOWN",
-      className: "bg-green-500/20 text-green-600 border-green-500/30",
+      bg: "bg-emerald-500/10",
+      text: "text-emerald-500",
+      dot: "bg-emerald-500",
     },
     keyup: {
       label: "UP",
-      className: "bg-red-500/20 text-red-600 border-red-500/30",
+      bg: "bg-rose-500/10",
+      text: "text-rose-500",
+      dot: "bg-rose-500",
     },
     keypress: {
       label: "PRESS",
-      className: "bg-blue-500/20 text-blue-600 border-blue-500/30",
+      bg: "bg-sky-500/10",
+      text: "text-sky-500",
+      dot: "bg-sky-500",
     },
   };
 
-  const { label, className } = config[type];
+  const { label, bg, text, dot } = config[type];
 
   return (
-    <Badge className={`font-mono text-xs ${className}`} variant="outline">
+    <span
+      className={`inline-flex items-center gap-1.5 rounded px-2 py-0.5 font-medium font-mono text-[10px] uppercase tracking-wider ${bg} ${text}`}
+    >
+      <span className={`h-1.5 w-1.5 rounded-full ${dot}`} />
       {label}
-    </Badge>
+    </span>
   );
 }
 
-function ModifierBadges({
+function ModifierIndicator({
   modifiers,
 }: {
   modifiers: KeyEventEntry["modifiers"];
@@ -71,57 +76,81 @@ function ModifierBadges({
   }
 
   return (
-    <span className="text-muted-foreground text-xs">+{active.join("+")}</span>
+    <span className="rounded bg-amber-500/10 px-1.5 py-0.5 font-mono text-[10px] text-amber-600 dark:text-amber-400">
+      +{active.join("+")}
+    </span>
   );
 }
 
 export function KeyLog({ events, onClear }: KeyLogProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scroll to bottom when new events are added
-  const eventsLength = events.length;
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [eventsLength]);
+  // Reverse events so newest appear at top
+  const reversedEvents = [...events].reverse();
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="font-medium text-base">Key Event Log</CardTitle>
-        <Button onClick={onClear} size="sm" variant="outline">
+    <div className="flex flex-col">
+      {/* Header */}
+      <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <h2 className="font-semibold text-foreground text-sm tracking-tight">
+            Event Log
+          </h2>
+          <span className="rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+            {events.length} events
+          </span>
+        </div>
+        <Button
+          className="h-7 px-2 text-xs"
+          disabled={events.length === 0}
+          onClick={onClear}
+          variant="ghost"
+        >
           Clear
         </Button>
-      </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[200px] w-full rounded-md border">
-          <div className="space-y-1 p-4" ref={scrollRef}>
-            {events.length === 0 ? (
-              <p className="py-8 text-center text-muted-foreground text-sm">
-                Press any key to see events here
+      </div>
+
+      {/* Table */}
+      <div className="overflow-hidden rounded-lg border border-border/50 bg-card/30 backdrop-blur-sm">
+        {/* Table Header */}
+        <div className="grid grid-cols-[100px_70px_1fr_80px_auto] gap-4 border-border/50 border-b bg-muted/30 px-4 py-2 font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
+          <span>Time</span>
+          <span>Type</span>
+          <span>Key Code</span>
+          <span>Value</span>
+          <span>Modifiers</span>
+        </div>
+
+        {/* Table Body */}
+        <div className="max-h-[240px] overflow-y-auto">
+          {events.length === 0 ? (
+            <div className="flex h-[120px] items-center justify-center">
+              <p className="text-muted-foreground/60 text-sm">
+                Press any key to see events
               </p>
-            ) : (
-              events.map((event) => (
-                <div
-                  className="flex items-center gap-3 py-1 font-mono text-sm"
-                  key={event.id}
-                >
-                  <span className="w-24 text-muted-foreground text-xs">
-                    {formatTime(event.timestamp)}
-                  </span>
-                  <EventTypeBadge type={event.type} />
-                  <span className="w-28 font-medium">{event.code}</span>
-                  <span className="text-muted-foreground">
-                    &quot;{event.key}&quot;
-                  </span>
-                  <ModifierBadges modifiers={event.modifiers} />
-                </div>
-              ))
-            )}
-          </div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+            </div>
+          ) : (
+            reversedEvents.map((event, index) => (
+              <div
+                className={`grid grid-cols-[100px_70px_1fr_80px_auto] items-center gap-4 px-4 py-2.5 font-mono text-xs transition-colors ${
+                  index === 0 ? "bg-primary/5" : "hover:bg-muted/30"
+                } ${index !== reversedEvents.length - 1 ? "border-border/30 border-b" : ""}`}
+                key={event.id}
+              >
+                <span className="text-muted-foreground tabular-nums">
+                  {formatTime(event.timestamp)}
+                </span>
+                <EventTypeIndicator type={event.type} />
+                <span className="font-medium text-foreground">
+                  {event.code}
+                </span>
+                <span className="text-muted-foreground">
+                  &quot;{event.key}&quot;
+                </span>
+                <ModifierIndicator modifiers={event.modifiers} />
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

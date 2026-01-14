@@ -13,12 +13,12 @@ interface KeyProps {
 
 function getKeyStateClass(isPressed: boolean, isVisited: boolean): string {
   if (isPressed) {
-    return "scale-95 border-primary bg-primary text-primary-foreground shadow-inner";
+    return "translate-y-[2px] border-primary/80 bg-primary text-primary-foreground shadow-none ring-2 ring-primary/30";
   }
   if (isVisited) {
-    return "border-green-500/50 bg-green-500/10 text-card-foreground shadow-sm";
+    return "border-emerald-500/30 bg-emerald-500/5 text-foreground shadow-[0_2px_0_0_rgba(0,0,0,0.1)] dark:shadow-[0_2px_0_0_rgba(255,255,255,0.05)]";
   }
-  return "border-border bg-card text-card-foreground shadow-sm hover:bg-accent/50";
+  return "border-border/60 bg-gradient-to-b from-card to-card/80 text-foreground shadow-[0_2px_0_0_rgba(0,0,0,0.1)] dark:shadow-[0_2px_0_0_rgba(255,255,255,0.05)] hover:from-accent/50 hover:to-accent/30";
 }
 
 export function Key({
@@ -26,7 +26,7 @@ export function Key({
   isPressed,
   isVisited,
   isShiftPressed = false,
-  baseSize = 48,
+  baseSize = 44,
 }: KeyProps) {
   const width = (keyDef.width || 1) * baseSize;
   const displayLabel =
@@ -35,8 +35,8 @@ export function Key({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center rounded-lg border font-medium transition-all duration-75",
-        "select-none text-sm",
+        "relative flex items-center justify-center rounded-md border font-medium transition-all duration-100 ease-out",
+        "select-none text-xs tracking-tight",
         getKeyStateClass(isPressed, isVisited)
       )}
       style={{
@@ -45,16 +45,24 @@ export function Key({
         minWidth: `${width}px`,
       }}
     >
-      {/* Visited indicator dot */}
+      {/* Visited indicator */}
       {isVisited && !isPressed && (
-        <span className="absolute top-1 right-1.5 h-1.5 w-1.5 rounded-full bg-green-500" />
+        <span className="absolute top-1 right-1 h-1 w-1 rounded-full bg-emerald-500 shadow-[0_0_4px_rgba(16,185,129,0.5)]" />
       )}
+      {/* Shift label */}
       {keyDef.shiftLabel && !isShiftPressed && (
-        <span className="absolute top-1 left-1.5 text-[10px] text-muted-foreground">
+        <span className="absolute top-0.5 left-1 font-normal text-[8px] text-muted-foreground/70">
           {keyDef.shiftLabel}
         </span>
       )}
-      <span className={keyDef.shiftLabel ? "mt-1" : ""}>{displayLabel}</span>
+      <span
+        className={cn(
+          "truncate px-1",
+          keyDef.shiftLabel && !isShiftPressed ? "mt-1.5" : ""
+        )}
+      >
+        {displayLabel}
+      </span>
     </div>
   );
 }

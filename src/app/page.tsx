@@ -12,22 +12,24 @@ export default function Home() {
   const [showNumpad, setShowNumpad] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex items-start justify-between">
-          <div>
-            <h1 className="font-bold text-3xl text-foreground tracking-tight">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <main className="mx-auto max-w-6xl px-6 py-12">
+        {/* Header */}
+        <header className="mb-10 flex items-center justify-between">
+          <div className="space-y-1">
+            <h1 className="font-semibold text-foreground text-xl tracking-tight">
               Keyboard Visualizer
             </h1>
-            <p className="mt-1 text-muted-foreground">
-              Press keys on your keyboard to see them highlighted in real-time
+            <p className="text-muted-foreground text-sm">
+              Press keys to see them highlighted in real-time
             </p>
           </div>
           <ThemeToggle />
-        </div>
+        </header>
 
-        <div className="space-y-8">
-          <div className="overflow-x-auto pb-4">
+        {/* Main content */}
+        <div className="space-y-10">
+          <section className="overflow-x-auto">
             <Keyboard
               onClearVisited={clearVisited}
               onToggleNumpad={() => setShowNumpad(!showNumpad)}
@@ -35,10 +37,19 @@ export default function Home() {
               showNumpad={showNumpad}
               visitedKeys={visitedKeys}
             />
-          </div>
+          </section>
 
-          <KeyLog events={eventLog} onClear={clearLog} />
+          <section>
+            <KeyLog events={eventLog} onClear={clearLog} />
+          </section>
         </div>
+
+        {/* Footer */}
+        <footer className="mt-16 border-border/40 border-t pt-6">
+          <p className="text-center text-muted-foreground/60 text-xs">
+            Built with Next.js, Tailwind CSS, and Shadcn/UI
+          </p>
+        </footer>
       </main>
     </div>
   );

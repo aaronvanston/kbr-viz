@@ -21,8 +21,8 @@ export function Keyboard({
 }: KeyboardProps) {
   const isShiftPressed =
     pressedKeys.has("ShiftLeft") || pressedKeys.has("ShiftRight");
-  const baseSize = 48;
-  const gap = 4;
+  const baseSize = 44;
+  const gap = 3;
 
   // Main keyboard rows (0-5 are the main keys)
   const mainKeyboardRows = ansiQwerty.mainRows.slice(0, 6);
@@ -33,26 +33,38 @@ export function Keyboard({
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h2 className="font-semibold text-foreground text-lg">
-            {ansiQwerty.name}
+        <div className="flex items-center gap-3">
+          <h2 className="font-semibold text-foreground text-sm tracking-tight">
+            Keyboard
           </h2>
-          <span className="text-muted-foreground text-sm">
-            {visitedKeys.size} keys pressed
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+              {visitedKeys.size} pressed
+            </span>
+            {visitedKeys.size > 0 && (
+              <button
+                className="text-[10px] text-muted-foreground transition-colors hover:text-foreground"
+                onClick={onClearVisited}
+                type="button"
+              >
+                Reset
+              </button>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button onClick={onClearVisited} size="sm" variant="outline">
-            Reset Visited
-          </Button>
-          <Button onClick={onToggleNumpad} size="sm" variant="outline">
-            {showNumpad ? "Hide Numpad" : "Show Numpad"}
-          </Button>
-        </div>
+        <Button
+          className="h-7 px-2 text-xs"
+          onClick={onToggleNumpad}
+          variant="ghost"
+        >
+          {showNumpad ? "Hide Numpad" : "Show Numpad"}
+        </Button>
       </div>
 
-      <div className="flex gap-6">
+      {/* Keyboard container */}
+      <div className="inline-flex gap-5 rounded-xl border border-border/40 bg-gradient-to-b from-muted/30 to-muted/10 p-4 backdrop-blur-sm">
         {/* Main keyboard section */}
         <div className="flex flex-col" style={{ gap: `${gap}px` }}>
           {mainKeyboardRows.map((row, rowIndex) => (
@@ -72,7 +84,7 @@ export function Keyboard({
         </div>
 
         {/* Navigation and arrow keys */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {/* Spacer for function row */}
           <div style={{ height: `${baseSize}px` }} />
 
@@ -121,7 +133,7 @@ export function Keyboard({
 
         {/* Numpad */}
         {showNumpad && (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 border-border/30 border-l pl-5">
             {/* Spacer for function row */}
             <div style={{ height: `${baseSize}px` }} />
 
