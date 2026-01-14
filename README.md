@@ -14,7 +14,7 @@ A real-time keyboard visualization app that displays your keyboard layout and hi
 
 ## Tech Stack
 
-- [Next.js 14](https://nextjs.org/) - React framework with App Router
+- [Next.js 16](https://nextjs.org/) - React framework with App Router & Turbopack
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
 - [Shadcn/UI](https://ui.shadcn.com/) - Accessible component library
 - [next-themes](https://github.com/pacocoursey/next-themes) - Theme management
