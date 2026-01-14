@@ -1,0 +1,145 @@
+import type { KeyboardLayout } from "./types";
+
+export const ansiQwerty: KeyboardLayout = {
+  name: "ANSI QWERTY",
+  mainRows: [
+    // Function row
+    [
+      { code: "Escape", label: "Esc", width: 1 },
+      { code: "F1", label: "F1" },
+      { code: "F2", label: "F2" },
+      { code: "F3", label: "F3" },
+      { code: "F4", label: "F4" },
+      { code: "F5", label: "F5" },
+      { code: "F6", label: "F6" },
+      { code: "F7", label: "F7" },
+      { code: "F8", label: "F8" },
+      { code: "F9", label: "F9" },
+      { code: "F10", label: "F10" },
+      { code: "F11", label: "F11" },
+      { code: "F12", label: "F12" },
+    ],
+    // Number row
+    [
+      { code: "Backquote", label: "`", shiftLabel: "~" },
+      { code: "Digit1", label: "1", shiftLabel: "!" },
+      { code: "Digit2", label: "2", shiftLabel: "@" },
+      { code: "Digit3", label: "3", shiftLabel: "#" },
+      { code: "Digit4", label: "4", shiftLabel: "$" },
+      { code: "Digit5", label: "5", shiftLabel: "%" },
+      { code: "Digit6", label: "6", shiftLabel: "^" },
+      { code: "Digit7", label: "7", shiftLabel: "&" },
+      { code: "Digit8", label: "8", shiftLabel: "*" },
+      { code: "Digit9", label: "9", shiftLabel: "(" },
+      { code: "Digit0", label: "0", shiftLabel: ")" },
+      { code: "Minus", label: "-", shiftLabel: "_" },
+      { code: "Equal", label: "=", shiftLabel: "+" },
+      { code: "Backspace", label: "Backspace", width: 2 },
+    ],
+    // Top letter row
+    [
+      { code: "Tab", label: "Tab", width: 1.5 },
+      { code: "KeyQ", label: "Q" },
+      { code: "KeyW", label: "W" },
+      { code: "KeyE", label: "E" },
+      { code: "KeyR", label: "R" },
+      { code: "KeyT", label: "T" },
+      { code: "KeyY", label: "Y" },
+      { code: "KeyU", label: "U" },
+      { code: "KeyI", label: "I" },
+      { code: "KeyO", label: "O" },
+      { code: "KeyP", label: "P" },
+      { code: "BracketLeft", label: "[", shiftLabel: "{" },
+      { code: "BracketRight", label: "]", shiftLabel: "}" },
+      { code: "Backslash", label: "\\", shiftLabel: "|", width: 1.5 },
+    ],
+    // Home row
+    [
+      { code: "CapsLock", label: "Caps", width: 1.75 },
+      { code: "KeyA", label: "A" },
+      { code: "KeyS", label: "S" },
+      { code: "KeyD", label: "D" },
+      { code: "KeyF", label: "F" },
+      { code: "KeyG", label: "G" },
+      { code: "KeyH", label: "H" },
+      { code: "KeyJ", label: "J" },
+      { code: "KeyK", label: "K" },
+      { code: "KeyL", label: "L" },
+      { code: "Semicolon", label: ";", shiftLabel: ":" },
+      { code: "Quote", label: "'", shiftLabel: '"' },
+      { code: "Enter", label: "Enter", width: 2.25 },
+    ],
+    // Bottom letter row
+    [
+      { code: "ShiftLeft", label: "Shift", width: 2.25 },
+      { code: "KeyZ", label: "Z" },
+      { code: "KeyX", label: "X" },
+      { code: "KeyC", label: "C" },
+      { code: "KeyV", label: "V" },
+      { code: "KeyB", label: "B" },
+      { code: "KeyN", label: "N" },
+      { code: "KeyM", label: "M" },
+      { code: "Comma", label: ",", shiftLabel: "<" },
+      { code: "Period", label: ".", shiftLabel: ">" },
+      { code: "Slash", label: "/", shiftLabel: "?" },
+      { code: "ShiftRight", label: "Shift", width: 2.75 },
+    ],
+    // Bottom modifier row
+    [
+      { code: "ControlLeft", label: "Ctrl", width: 1.25 },
+      { code: "AltLeft", label: "Alt", width: 1.25 },
+      { code: "MetaLeft", label: "Cmd", width: 1.25 },
+      { code: "Space", label: "", width: 6.25 },
+      { code: "MetaRight", label: "Cmd", width: 1.25 },
+      { code: "AltRight", label: "Alt", width: 1.25 },
+      { code: "ControlRight", label: "Ctrl", width: 1.25 },
+    ],
+    // Navigation cluster (separate section)
+    [
+      { code: "Insert", label: "Ins" },
+      { code: "Home", label: "Home" },
+      { code: "PageUp", label: "PgUp" },
+    ],
+    [
+      { code: "Delete", label: "Del" },
+      { code: "End", label: "End" },
+      { code: "PageDown", label: "PgDn" },
+    ],
+    // Arrow keys
+    [{ code: "ArrowUp", label: "^" }],
+    [
+      { code: "ArrowLeft", label: "<" },
+      { code: "ArrowDown", label: "v" },
+      { code: "ArrowRight", label: ">" },
+    ],
+  ],
+  numpadRows: [
+    [
+      { code: "NumLock", label: "Num" },
+      { code: "NumpadDivide", label: "/" },
+      { code: "NumpadMultiply", label: "*" },
+      { code: "NumpadSubtract", label: "-" },
+    ],
+    [
+      { code: "Numpad7", label: "7" },
+      { code: "Numpad8", label: "8" },
+      { code: "Numpad9", label: "9" },
+      { code: "NumpadAdd", label: "+" },
+    ],
+    [
+      { code: "Numpad4", label: "4" },
+      { code: "Numpad5", label: "5" },
+      { code: "Numpad6", label: "6" },
+    ],
+    [
+      { code: "Numpad1", label: "1" },
+      { code: "Numpad2", label: "2" },
+      { code: "Numpad3", label: "3" },
+      { code: "NumpadEnter", label: "Ent" },
+    ],
+    [
+      { code: "Numpad0", label: "0", width: 2 },
+      { code: "NumpadDecimal", label: "." },
+    ],
+  ],
+};
