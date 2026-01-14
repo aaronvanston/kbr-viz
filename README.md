@@ -2,6 +2,8 @@
 
 A real-time keyboard visualization app that displays your keyboard layout and highlights keys as you type. Built with Next.js, Tailwind CSS, and Shadcn/UI.
 
+![Demo](demo.gif)
+
 ## Features
 
 - **Real-time key highlighting** - See keys light up as you press them
