@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ansiQwerty } from "@/lib/layouts";
+import { ansiQwerty } from "@/lib/layouts/ansi-qwerty";
 import { Key } from "./key";
 
 interface KeyboardProps {
@@ -67,8 +67,8 @@ export function Keyboard({
       <div className="inline-flex gap-5 rounded-xl border border-border/40 bg-gradient-to-b from-muted/30 to-muted/10 p-4 backdrop-blur-sm">
         {/* Main keyboard section */}
         <div className="flex flex-col" style={{ gap: `${gap}px` }}>
-          {mainKeyboardRows.map((row, rowIndex) => (
-            <div className="flex" key={rowIndex} style={{ gap: `${gap}px` }}>
+          {mainKeyboardRows.map((row) => (
+            <div className="flex" key={row[0].code} style={{ gap: `${gap}px` }}>
               {row.map((keyDef) => (
                 <Key
                   baseSize={baseSize}
@@ -90,8 +90,12 @@ export function Keyboard({
 
           {/* Navigation cluster */}
           <div className="flex flex-col" style={{ gap: `${gap}px` }}>
-            {navCluster.map((row, rowIndex) => (
-              <div className="flex" key={rowIndex} style={{ gap: `${gap}px` }}>
+            {navCluster.map((row) => (
+              <div
+                className="flex"
+                key={row[0].code}
+                style={{ gap: `${gap}px` }}
+              >
                 {row.map((keyDef) => (
                   <Key
                     baseSize={baseSize}
@@ -114,8 +118,12 @@ export function Keyboard({
             className="flex flex-col items-center"
             style={{ gap: `${gap}px` }}
           >
-            {arrowRows.map((row, rowIndex) => (
-              <div className="flex" key={rowIndex} style={{ gap: `${gap}px` }}>
+            {arrowRows.map((row) => (
+              <div
+                className="flex"
+                key={row[0].code}
+                style={{ gap: `${gap}px` }}
+              >
                 {row.map((keyDef) => (
                   <Key
                     baseSize={baseSize}
@@ -138,10 +146,10 @@ export function Keyboard({
             <div style={{ height: `${baseSize}px` }} />
 
             <div className="flex flex-col" style={{ gap: `${gap}px` }}>
-              {ansiQwerty.numpadRows.map((row, rowIndex) => (
+              {ansiQwerty.numpadRows.map((row) => (
                 <div
                   className="flex"
-                  key={rowIndex}
+                  key={row[0].code}
                   style={{ gap: `${gap}px` }}
                 >
                   {row.map((keyDef) => (
